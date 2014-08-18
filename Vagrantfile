@@ -12,11 +12,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
   config.vm.provision "docker" do |d|
-    # Pulling Docker images
-    d.pull_images "quay.io/frobini/apachecy"
+    # Building Docker images
+    d.build_image "/vagrant",
+      args: "-t frobini/apachecy"
 
     # Run Docker images
-    d.run "quay.io/frobini/apachecy",
+    d.run "frobini/apachecy",
       args: "-d -p '80:80'"
   end
 
